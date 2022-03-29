@@ -39,6 +39,15 @@ namespace Lean.Common
 			UpdateColor();
 		}
 
+		public void OnDelta(Vector2 delta)
+        {
+			Debug.Log(delta);
+			if (Vector2.SqrMagnitude(delta) > 2)
+            {
+				UpdateColor();
+            }
+        }
+
 		public void UpdateColor()
 		{
 			if (cachedRenderer == null) cachedRenderer = GetComponent<Renderer>();
