@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5475315118061195281}
   - component: {fileID: 5475315118061195282}
   - component: {fileID: 5475315118061195283}
+  - component: {fileID: 6833763126547605313}
+  - component: {fileID: 3403072314550245263}
   m_Layer: 0
   m_Name: Press To Select
   m_TagString: Untagged
@@ -89,9 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deselectWithNothing: 1
-  limit: 0
-  maxSelectables: 0
-  reselect: 0
+  limit: 2
+  maxSelectables: 1
+  reselect: 2
   selectables: []
   onSelected:
     m_PersistentCalls:
@@ -113,5 +115,80 @@ MonoBehaviour:
     Distance: 50
   deselectWithFingers: 0
   onSelectedFinger:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6833763126547605313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475315118061195757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a1ffaf4867e874da73bc733d1a614a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lean: {fileID: 5475315118061195283}
+--- !u!114 &3403072314550245263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5475315118061195757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca05b4057f181e4db28ff62498d46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreStartedOverGui: 1
+  ignoreIsOverGui: 0
+  ignoreIfStatic: 0
+  ignoreIfDown: 0
+  ignoreIfUp: 0
+  ignoreIfHover: 1
+  requiredSelectable: {fileID: 0}
+  onFinger:
+    m_PersistentCalls:
+      m_Calls: []
+  coordinate: 0
+  multiplier: 1
+  onDelta:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6833763126547605313}
+        m_TargetAssemblyTypeName: Deselecting, Assembly-CSharp
+        m_MethodName: DesSelected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDistance:
+    m_PersistentCalls:
+      m_Calls: []
+  ScreenDepth:
+    Conversion: 1
+    Camera: {fileID: 0}
+    Object: {fileID: 0}
+    Layers:
+      serializedVersion: 2
+      m_Bits: 4294967291
+    Distance: 0
+  onWorldFrom:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldTo:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldDelta:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorldFromTo:
     m_PersistentCalls:
       m_Calls: []

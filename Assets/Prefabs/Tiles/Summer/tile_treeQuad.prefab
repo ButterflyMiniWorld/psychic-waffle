@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5887801406011232936}
   - component: {fileID: -7460143986770519763}
+  - component: {fileID: 8523066357522112209}
   m_Layer: 0
   m_Name: tile_treeQuad
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   isFired: 0
   isForest: 0
   movePointsCost: 0
+  unit: {fileID: 0}
+  marker: {fileID: 0}
+--- !u!114 &8523066357522112209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556815011927820306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e37bf9d23704849b6d4bb2fae198be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSelected: 0
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2299278905270496652
 PrefabInstance:
   m_ObjectHideFlags: 0
