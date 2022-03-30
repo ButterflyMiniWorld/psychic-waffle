@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,11 @@ public class ReadTilesMap : MonoBehaviour
     private int left, right, down, up = 0;
 
     private List<Transform> tiles = new List<Transform>();
+
+    public static Action<BaseTile[,]> OnMapRead;
+
+
+    private BaseTile[,] BaseTiles => tileMap;
 
 
     private void Awake()
@@ -36,17 +42,10 @@ public class ReadTilesMap : MonoBehaviour
             int z = (int)((tile.position.z - up + 0.5) * (-1));
 
             tileMap[x, z] = tile.GetComponent<BaseTile>();
+            tileMap[x, z].Init(x, z);
         }
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                //Debug
-            }
-        }
-
-
+        OnMapRead?.Invoke(tileMap);
     }
 
     private void CheckPosition(Vector3 tilePosition)
