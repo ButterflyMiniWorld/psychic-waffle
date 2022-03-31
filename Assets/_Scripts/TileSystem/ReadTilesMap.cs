@@ -44,7 +44,7 @@ public class ReadTilesMap : MonoBehaviour
             tileMap[x, z].Init(x, z);
         }
 
-        OnMapRead?.Invoke(tileMap);
+        GetComponent<TurnController>().InitMap(tileMap);
     }
 
     private void CheckPosition(Vector3 tilePosition)

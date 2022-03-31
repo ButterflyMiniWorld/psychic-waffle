@@ -21,13 +21,19 @@ public class TurnController : MonoBehaviour
         turnAction = GetComponent<TurnAction>();
         reader = GetComponent<ReadTilesMap>();
         turnAction.OnTurnEnd += GameStarted;
-        ReadTilesMap.OnMapRead += tileMap => tilesMap = tileMap;
+        ReadTilesMap.OnMapRead += InitMap;
     }
 
     private void OnDisable()
     {
         turnAction.OnTurnEnd -= GameStarted;
-        ReadTilesMap.OnMapRead -= tileMap => tilesMap = tileMap;
+        ReadTilesMap.OnMapRead -= InitMap;
+    }
+
+    public void InitMap (BaseTile[,] map)
+    {
+        Debug.Log("Map is initialized");
+        tilesMap = map;
     }
 
     public void GameStarted()

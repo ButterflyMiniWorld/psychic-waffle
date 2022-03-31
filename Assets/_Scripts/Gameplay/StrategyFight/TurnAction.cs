@@ -71,7 +71,6 @@ public class TurnAction : Singleton<TurnAction>
         {
             for (int z = tile.Coordinate.z - 1; z <= tile.Coordinate.z + 1; z++)
             {
-                Debug.Log(tilesMap.GetLength(0) + "  :   " + tilesMap.GetLength(1));
                 if(x < 0 || z < 0 || x > tilesMap.GetLength(0) || z > tilesMap.GetLength(1))
                 {
                     break;
