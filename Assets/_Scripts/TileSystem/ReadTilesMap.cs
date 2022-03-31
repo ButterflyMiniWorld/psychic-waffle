@@ -13,7 +13,6 @@ public class ReadTilesMap : MonoBehaviour
 
     public static Action<BaseTile[,]> OnMapRead;
 
-
     private BaseTile[,] BaseTiles => tileMap;
 
 

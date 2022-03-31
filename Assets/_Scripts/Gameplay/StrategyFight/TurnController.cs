@@ -62,5 +62,6 @@ public class TurnController : MonoBehaviour
     public void TurnEnd()
     {
         OnTurnEnd?.Invoke();
+        GameStarted();
     }
 }

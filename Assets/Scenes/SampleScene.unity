@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 280539256}
     m_Modifications:
+    - target: {fileID: 1743063144952125171, guid: b74accac11f53f14897f8fa17821987c, type: 3}
+      propertyPath: onDelta.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1418438475}
     - target: {fileID: 3274671812984918177, guid: b74accac11f53f14897f8fa17821987c, type: 3}
       propertyPath: m_Name
       value: LeanTouch
@@ -429,73 +433,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &549872175 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3274671812984918177, guid: b74accac11f53f14897f8fa17821987c, type: 3}
-  m_PrefabInstance: {fileID: 21943005}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &549872178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549872175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca05b4057f181e4db28ff62498d46b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ignoreStartedOverGui: 1
-  ignoreIsOverGui: 0
-  ignoreIfStatic: 0
-  ignoreIfDown: 0
-  ignoreIfUp: 0
-  ignoreIfHover: 1
-  requiredSelectable: {fileID: 1029885913}
-  onFinger:
-    m_PersistentCalls:
-      m_Calls: []
-  coordinate: 0
-  multiplier: 1
-  onDelta:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1418438475}
-        m_TargetAssemblyTypeName: Deselecting, Assembly-CSharp
-        m_MethodName: DesSelected
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onDistance:
-    m_PersistentCalls:
-      m_Calls: []
-  ScreenDepth:
-    Conversion: 1
-    Camera: {fileID: 0}
-    Object: {fileID: 0}
-    Layers:
-      serializedVersion: 2
-      m_Bits: 4294967291
-    Distance: 0
-  onWorldFrom:
-    m_PersistentCalls:
-      m_Calls: []
-  onWorldTo:
-    m_PersistentCalls:
-      m_Calls: []
-  onWorldDelta:
-    m_PersistentCalls:
-      m_Calls: []
-  onWorldFromTo:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &698119129
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,32 +563,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5475315118061195281, guid: 4c34173dce70eb748bc16516b9a24c60, type: 3}
   m_PrefabInstance: {fileID: 1777618426}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &979357200 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3004058557583792590, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
+--- !u!114 &979357201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 979357201, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
   m_PrefabInstance: {fileID: 1835076744}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &979357201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979357200}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7c6caaf953fe424db4de1d33e23c02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allUnits:
-  - {fileID: 1029885915}
---- !u!114 &979357202
+--- !u!114 &979357202 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 979357202, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
+  m_PrefabInstance: {fileID: 1835076744}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 979357200}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbf96dafc2f4d634b97b946aa22d2db5, type: 3}
@@ -1309,7 +1237,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 280539256}
     m_Modifications:
-    - target: {fileID: 3403072314550245263, guid: 4c34173dce70eb748bc16516b9a24c60, type: 3}
+    - target: {fileID: 0}
       propertyPath: requiredSelectable
       value: 
       objectReference: {fileID: 1029885913}
@@ -1361,8 +1289,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Press To Select
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3403072314550245263, guid: 4c34173dce70eb748bc16516b9a24c60, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c34173dce70eb748bc16516b9a24c60, type: 3}
 --- !u!1001 &1835076744
 PrefabInstance:
@@ -1371,6 +1298,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 698119130}
     m_Modifications:
+    - target: {fileID: 979357201, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
+      propertyPath: allUnits.Array.data[0]
+      value: 
+      objectReference: {fileID: 1029885915}
     - target: {fileID: 3004058557583792588, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1423,8 +1354,7 @@ PrefabInstance:
       propertyPath: unit
       value: 
       objectReference: {fileID: 1029885915}
-    m_RemovedComponents:
-    - {fileID: 5558352975385044947, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0a35559075b5b644bf87379c116a12e, type: 3}
 --- !u!1 &2004584877
 GameObject:
