@@ -49,6 +49,8 @@ MonoBehaviour:
   typeOfTiles: 0
   isFired: 0
   isForest: 0
+  isMountain: 1
+  isPlain: 0
   movePointsCost: 0
   unit: {fileID: 0}
   marker: {fileID: 3571895215332714900}

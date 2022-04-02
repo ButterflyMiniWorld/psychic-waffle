@@ -11,7 +11,7 @@ public enum TilesType
 
 public struct WorldCoordinate
 {
-    public WorldCoordinate (int x, int z)
+    public WorldCoordinate(int x, int z)
     {
         this.x = x;
         this.z = z;
@@ -28,6 +28,8 @@ public class BaseTile : MonoBehaviour
 
     [SerializeField] protected bool isFired;
     [SerializeField] protected bool isForest;
+    [SerializeField] protected bool isMountain;
+    [SerializeField] protected bool isPlain;
 
     [SerializeField] protected int movePointsCost;
 
@@ -69,10 +71,38 @@ public class BaseTile : MonoBehaviour
     public void UnitCome(BaseUnit unit)
     {
         this.unit = unit;
+        Check_State();
     }
 
     public void SelectedToMoveTile()
     {
         TurnAction.Instance.SelectedTile(this);
+    }
+    private void Check_State()
+    {
+        if (isFired)
+        {
+
+        }
+        if (isForest)
+        {
+
+        }
+        if (isMountain)
+        {
+            State_Mountain();
+        }
+        if(isPlain)
+        {
+            State_Plain();
+        }    
+    }
+    private void State_Mountain()
+    {
+        unit.transform.position = new Vector3(unit.transform.position.x, 1, unit.transform.position.z);
+    }
+    private void State_Plain()
+    {
+        unit.transform.position = new Vector3(unit.transform.position.x, (float)0.5, unit.transform.position.z);
     }
 }
