@@ -6,11 +6,11 @@ public class TurnController : MonoBehaviour
 {
     [SerializeField] private List<BaseUnit> allUnits = new List<BaseUnit>();
 
-    private List<BaseUnit> sortedUnits = new List<BaseUnit>();
+    [SerializeField] private List<BaseUnit> sortedUnits = new List<BaseUnit>();
 
     private TurnAction turnAction;
     private ReadTilesMap reader;
-    private BaseTile[,] tilesMap;
+    private BaseTile[,] tilesMap = new BaseTile[100,100];
 
     private int currentUnitId = 0;
 
@@ -20,26 +20,44 @@ public class TurnController : MonoBehaviour
     {
         turnAction = GetComponent<TurnAction>();
         reader = GetComponent<ReadTilesMap>();
-        turnAction.OnTurnEnd += GameStarted;
+        turnAction.OnTurnEnd += NextTurn;
         ReadTilesMap.OnMapRead += InitMap;
     }
 
     private void OnDisable()
     {
-        turnAction.OnTurnEnd -= GameStarted;
+        turnAction.OnTurnEnd -= NextTurn;
         ReadTilesMap.OnMapRead -= InitMap;
     }
 
-    public void InitMap (BaseTile[,] map)
+    public void InitMap (BaseTile[,] map, int height, int width)
     {
         Debug.Log("Map is initialized");
+
         tilesMap = map;
+
+        foreach (BaseTile tile in tilesMap)
+        {
+            if (tile == null)
+            {
+                continue;
+            }
+            if (tile.TryGetUnit(out BaseUnit unit))
+            {
+                allUnits.Add(unit);
+            }
+        }
+
+        turnAction.Init(tilesMap, height, width);
+        StartFight();
     }
 
-    public void GameStarted()
+    public void StartFight()
     {
-        foreach(BaseUnit unit in allUnits)
+        sortedUnits.Clear();
+        foreach (BaseUnit unit in allUnits)
         {
+            bool forIsBreak = false;
             if(sortedUnits.Count <= 0)
             {
                 sortedUnits.Add(unit);
@@ -51,23 +69,36 @@ public class TurnController : MonoBehaviour
                     if(unit.Initiative > sortedUnits[i].Initiative)
                     {
                         sortedUnits.Insert(i, unit);
+                        forIsBreak = true;
                         break;
                     }
                 }
+                if (forIsBreak == false)
+                {
+                    sortedUnits.Add(unit);
+                }
             }
         }
-        StartTurn();
+        currentUnitId = 0;
+
+        NextTurn();
     }
 
-    private void StartTurn()
+    private void NextTurn()
     {
-        turnAction.Init(tilesMap);
+        if (currentUnitId == sortedUnits.Count)
+        {
+            StartFight();
+            return;
+        }
+
         turnAction.TurnIsStart(sortedUnits[currentUnitId]);
     }
 
     public void TurnEnd()
     {
         OnTurnEnd?.Invoke();
-        GameStarted();
+        currentUnitId++;
+        NextTurn();
     }
 }

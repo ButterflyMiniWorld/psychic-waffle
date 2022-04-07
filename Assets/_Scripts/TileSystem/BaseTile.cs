@@ -40,6 +40,22 @@ public class BaseTile : MonoBehaviour
 
     public WorldCoordinate Coordinate => coordinate;
 
+    public BaseUnit GetUnit => unit;
+
+    public bool TryGetUnit(out BaseUnit unit)
+    {
+        if (this.unit != null)
+        {
+            unit = this.unit;
+            return true;
+        }
+        else
+        {
+            unit = null;
+            return false;
+        }
+    }
+
     public void Init(int x, int z)
     {
         coordinate.x = x;
