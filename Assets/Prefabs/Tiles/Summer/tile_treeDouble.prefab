@@ -229,10 +229,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: a4cdb56cced5cbd42bb7610964f5451d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6f326b49e39a6034084ad6f522c5e3e4, type: 2}
     - target: {fileID: 919132149155446097, guid: a4cdb56cced5cbd42bb7610964f5451d, type: 3}
       propertyPath: m_Name
       value: TreeTile2
       objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: a4cdb56cced5cbd42bb7610964f5451d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6f326b49e39a6034084ad6f522c5e3e4, type: 2}
+    - target: {fileID: 7202271454713460447, guid: a4cdb56cced5cbd42bb7610964f5451d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6f326b49e39a6034084ad6f522c5e3e4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4cdb56cced5cbd42bb7610964f5451d, type: 3}
 --- !u!4 &7673804630234375393 stripped
