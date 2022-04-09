@@ -11,13 +11,14 @@ public class ReadTilesMap : MonoBehaviour
 
     private List<Transform> tiles = new List<Transform>();
 
-    public static Action<BaseTile[,]> OnMapRead;
-
+    public static Action<BaseTile[,], int, int> OnMapRead;
 
     private BaseTile[,] BaseTiles => tileMap;
 
+    public int GetWidth => -left + right;
+    public int GetHeight => -down + up;
 
-    private void Awake()
+    private void Start()
     {
         foreach(Transform childTile in transform)
         {
@@ -45,7 +46,7 @@ public class ReadTilesMap : MonoBehaviour
             tileMap[x, z].Init(x, z);
         }
 
-        OnMapRead?.Invoke(tileMap);
+        GetComponent<TurnController>().InitMap(tileMap, width, height);
     }
 
     private void CheckPosition(Vector3 tilePosition)

@@ -24,10 +24,16 @@ public class TurnAction : Singleton<TurnAction>
     private BaseTile tileToMove;
     private int actionCost;
 
+    private int height;
+    private int width;
+
     public Action OnTurnEnd;
 
-    public void Init(BaseTile[,] map)
+
+    public void Init(BaseTile[,] map, int height, int width)
     {
+        this.height = height;
+        this.width = width;
         tilesMap = map;
     }
 
@@ -71,7 +77,7 @@ public class TurnAction : Singleton<TurnAction>
         {
             for (int z = tile.Coordinate.z - 1; z <= tile.Coordinate.z + 1; z++)
             {
-                if(x < 0 || z < 0)
+                if(x < 0 || z < 0 || x > width - 1 || z > height - 1)
                 {
                     break;
                 }
