@@ -9,6 +9,7 @@ public struct PossibleTile
         this.tile = tile;
         actionCost = cost;
     }
+
     public BaseTile tile;
     public int actionCost;
 }
@@ -48,46 +49,8 @@ public class TurnAction : Singleton<TurnAction>
     {
         int actionPoints = currentUnit.ActionPointsLeft;
         WorldCoordinate start = new WorldCoordinate(currentTile.Coordinate.x, currentTile.Coordinate.z);
-
-        Recursion(currentTile, 0);
-    }
-
-    private void Recursion(BaseTile tile, int countRecursion)
-    {
-        if (tile != null)
-        {
-            PossibleTile possibleTile = new PossibleTile(tile, countRecursion);
-            tile.Selected();
-
-            if (!possibleTiles.Contains(possibleTile))
-            {
-                possibleTiles.Add(possibleTile);
-            }
-        }
-        else
-        {
-            return;
-        }
-        if (countRecursion >= currentUnit.ActionPointsLeft)
-        {
-            return;
-        }
-
-        for (int x = tile.Coordinate.x - 1; x <= tile.Coordinate.x + 1; x++)
-        {
-            for (int z = tile.Coordinate.z - 1; z <= tile.Coordinate.z + 1; z++)
-            {
-                if(x < 0 || z < 0 || x > width - 1 || z > height - 1)
-                {
-                    break;
-                }
-                if (tile == tilesMap[x, z] && currentTile == tilesMap[x,z])
-                {
-                    break;
-                }
-                Recursion(tilesMap[x, z], countRecursion + 1);
-            }
-        }
+        possibleTiles.Clear();
+        possibleTiles.AddRange(currentUnit.TilesToMove(tilesMap, width, height));
     }
 
     public void SelectedTile(BaseTile selectedTile)
