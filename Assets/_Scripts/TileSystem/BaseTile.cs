@@ -4,6 +4,13 @@ using UnityEngine;
 
 public enum TilesType
 {
+    Mountain,
+    Plain,
+    Swamp
+}
+
+public enum SeasonType
+{
     Meadown,
     Sand,
     Swamp
@@ -26,15 +33,12 @@ public class BaseTile : MonoBehaviour
 {
     [SerializeField] protected TilesType typeOfTiles;
 
-    [SerializeField] protected bool isFired;
-    [SerializeField] protected bool isForest;
-    [SerializeField] protected bool isMountain;
-    [SerializeField] protected bool isPlain;
-
     [SerializeField] protected int movePointsCost;
 
     [SerializeField] protected BaseUnit unit;
     [SerializeField] protected GameObject marker;
+
+    [SerializeField] protected LineRenderer tileMarker;
 
     private WorldCoordinate coordinate;
 
@@ -60,26 +64,46 @@ public class BaseTile : MonoBehaviour
     {
         coordinate.x = x;
         coordinate.z = z;
+        if (unit)
+        {
+            unit.Move(this);
+        }
     }
 
     private void Awake()
     {
-        TurnAction.Instance.OnTurnEnd += DeSelected;
+        TurnAction.Instance.OnTurnEnd += HideTileToMove;
     }
     private void OnDisable()
     {
-        TurnAction.Instance.OnTurnEnd -= DeSelected;
+        TurnAction.Instance.OnTurnEnd -= HideTileToMove;
     }
 
-    public void Selected()
+    #region Path Visualizer (Включается тайл если доступен для передвижения)
+
+    public void TileAvailableToMove()
     {
         marker.SetActive(true);
     }
-    public void DeSelected()
+    public void HideTileToMove()
     {
         marker.SetActive(false);
     }
+    #endregion
 
+    #region SelectingTile (Включается обозначения для выбранного тайла)
+    public void TileIsSelected()
+    {
+        tileMarker.enabled = true;
+        TurnAction.Instance.SelectedTile(this);
+    }
+    public void TileDeSelected()
+    {
+        tileMarker.enabled = false;
+    }
+    #endregion
+
+    #region Unit move
     public void UnitMove()
     {
         unit = null;
@@ -87,38 +111,9 @@ public class BaseTile : MonoBehaviour
     public void UnitCome(BaseUnit unit)
     {
         this.unit = unit;
-        Check_State();
+        TileUnitPlacement();
     }
 
-    public void SelectedToMoveTile()
-    {
-        TurnAction.Instance.SelectedTile(this);
-    }
-    private void Check_State()
-    {
-        if (isFired)
-        {
-
-        }
-        if (isForest)
-        {
-
-        }
-        if (isMountain)
-        {
-            State_Mountain();
-        }
-        if(isPlain)
-        {
-            State_Plain();
-        }    
-    }
-    private void State_Mountain()
-    {
-        unit.transform.position = new Vector3(unit.transform.position.x, 1, unit.transform.position.z);
-    }
-    private void State_Plain()
-    {
-        unit.transform.position = new Vector3(unit.transform.position.x, (float)0.5, unit.transform.position.z);
-    }
+    protected virtual void TileUnitPlacement() { }
+    #endregion
 }
