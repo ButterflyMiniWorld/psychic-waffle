@@ -8,6 +8,7 @@ public class ReadTilesMap : MonoBehaviour
     private BaseTile[,] tileMap;
 
     private int left, right, down, up = 0;
+    private int regionCounts = 0;
 
     private List<Transform> tiles = new List<Transform>();
 
@@ -17,6 +18,7 @@ public class ReadTilesMap : MonoBehaviour
 
     public int GetWidth => -left + right;
     public int GetHeight => -down + up;
+
 
     private void Start()
     {
@@ -36,6 +38,7 @@ public class ReadTilesMap : MonoBehaviour
 
         Debug.Log($"left: {left}; right: {right}; down: {down}; up: {up}; ");
 
+        Debug.Log(tiles.Count);
 
         foreach (Transform tile in tiles)
         {
@@ -43,7 +46,15 @@ public class ReadTilesMap : MonoBehaviour
             int z = (int)((tile.position.z - up + 0.5) * (-1));
 
             tileMap[x, z] = tile.GetComponent<BaseTile>();
-            tileMap[x, z].Init(x, z);
+            tileMap[x, z].InitCoordinate(x, z);
+
+            if (tileMap[x, z].GetRegionID == 0)
+            {
+                regionCounts++;
+                tileMap[x, z].InitRegion(regionCounts);
+            }
+
+            tileMap[x, z].SearchConnectedTiles();
         }
 
         GetComponent<TurnController>().InitMap(tileMap, width, height);

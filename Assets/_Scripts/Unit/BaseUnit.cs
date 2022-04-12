@@ -56,19 +56,17 @@ public class BaseUnit : MonoBehaviour
 
     private void TilesReccursionCheck (BaseTile tile, int countRecursion)
     {
-        if (tile != null)
-        {
-            PossibleTile possibleTile = new PossibleTile(tile, countRecursion);
-            tile.TileAvailableToMove();
-
-            if (!availableTilesToMove.Contains(possibleTile))
-            {
-                availableTilesToMove.Add(possibleTile);
-            }
-        }
-        else
+        if (tile == null)
         {
             return;
+        }
+
+        PossibleTile possibleTile = new PossibleTile(tile, countRecursion);
+        tile.TileAvailableToMove();
+
+        if (!availableTilesToMove.Contains(possibleTile))
+        {
+            availableTilesToMove.Add(possibleTile);
         }
 
         if (countRecursion >= ActionPointsLeft)
@@ -82,11 +80,11 @@ public class BaseUnit : MonoBehaviour
             {
                 if (x < 0 || z < 0 || x > mapHeight  - 1 || z > mapWidth - 1)
                 {
-                    break;
+                    continue;
                 }
                 if (tile == tilesMap[x, z] && currentTile == tilesMap[x, z])
                 {
-                    break;
+                    continue;
                 }
                 TilesReccursionCheck(tilesMap[x, z], countRecursion + 1);
             }
