@@ -2,49 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TilesType
-{
-    Mountain,
-    Plain,
-    Swamp
-}
-
-public enum SeasonType
-{
-    Meadown,
-    Sand,
-    Swamp
-}
-
-public struct WorldCoordinate
-{
-    public WorldCoordinate(int x, int z)
-    {
-        this.x = x;
-        this.z = z;
-    }
-
-    public int x;
-    public int z;
-}
-
-
 public class BaseTile : MonoBehaviour
 {
-    [SerializeField] protected TilesType typeOfTiles;
-
-    [SerializeField] protected int movePointsCost;
+    [SerializeField] protected TilesType typeOfTile;
 
     [SerializeField] protected BaseUnit unit;
     [SerializeField] protected GameObject marker;
 
     [SerializeField] protected LineRenderer tileMarker;
 
+    [SerializeField] protected List<Transform> pointsToConnect;
+
+    protected int movePointsCost;
+    [SerializeField] protected int regionID = 0;
+
     private WorldCoordinate coordinate;
 
     public WorldCoordinate Coordinate => coordinate;
-
     public BaseUnit GetUnit => unit;
+    public TilesType TypeOfTile => typeOfTile;
+    public int MovePointsCost => movePointsCost;
+    public int GetRegionID => regionID;
 
     public bool TryGetUnit(out BaseUnit unit)
     {
@@ -60,7 +38,7 @@ public class BaseTile : MonoBehaviour
         }
     }
 
-    public void Init(int x, int z)
+    public void InitCoordinate(int x, int z)
     {
         coordinate.x = x;
         coordinate.z = z;
@@ -70,8 +48,33 @@ public class BaseTile : MonoBehaviour
         }
     }
 
+    public void InitRegion(int regionID)
+    {
+        this.regionID = regionID;
+        SearchConnectedTiles();
+    }
+
     private void Awake()
     {
+        switch (typeOfTile)
+        {
+            case TilesType.Mountain:
+            {
+                movePointsCost = 2;
+                break;
+            }
+            case TilesType.Plain:
+            {
+                movePointsCost = 1;
+                break;
+            }
+            default:
+            {
+                movePointsCost = 1;
+                break;
+            }
+        }
+
         TurnAction.Instance.OnTurnEnd += HideTileToMove;
     }
     private void OnDisable()
@@ -115,5 +118,35 @@ public class BaseTile : MonoBehaviour
     }
 
     protected virtual void TileUnitPlacement() { }
+    #endregion
+
+    #region Regions creating
+
+    public void SearchConnectedTiles()
+    {
+        if (pointsToConnect.Count == 0)
+        {
+            return;
+        }
+
+        foreach (Transform connectionPoint in pointsToConnect)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(connectionPoint.position, 0.1f);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.TryGetComponent<BaseTile>(out BaseTile tile))
+                {
+                    if (tile.TypeOfTile == typeOfTile)
+                    {
+                        if(tile.GetRegionID != regionID)
+                        {
+                            tile.InitRegion(regionID);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     #endregion
 }

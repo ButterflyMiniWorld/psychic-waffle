@@ -10,6 +10,8 @@ public class BaseUnit : MonoBehaviour
 
     private int actionPointsLeft;
     private BaseTile[,] tilesMap;
+    private BaseTile lastTile;
+    private int costMod;
     private List<PossibleTile> availableTilesToMove = new List<PossibleTile>();
 
     private int mapHeight;
@@ -54,42 +56,58 @@ public class BaseUnit : MonoBehaviour
         return availableTilesToMove;
     }
 
-    private void TilesReccursionCheck (BaseTile tile, int countRecursion)
+    private void TilesReccursionCheck(BaseTile tile, int costMove)
     {
-        if (tile != null)
-        {
-            PossibleTile possibleTile = new PossibleTile(tile, countRecursion);
-            tile.TileAvailableToMove();
+        tile.TileAvailableToMove();
+        PossibleTile possibleTile = new PossibleTile(tile, costMove);
 
-            if (!availableTilesToMove.Contains(possibleTile))
-            {
-                availableTilesToMove.Add(possibleTile);
-            }
+        if (tile == null)
+        {
+            return;
+        }
+
+        if (lastTile == null)
+        {
+            lastTile = currentTile;
         }
         else
         {
-            return;
+            if (tile.GetRegionID != lastTile.GetRegionID)
+            {
+                costMove += 2;
+            }
+            else
+            {
+                costMove += 1;
+            }
+        }
+        if (!availableTilesToMove.Contains(possibleTile))
+        {
+            availableTilesToMove.Add(possibleTile);
         }
 
-        if (countRecursion >= ActionPointsLeft)
+        if (costMove >= ActionPointsLeft)
         {
             return;
         }
+
 
         for (int x = tile.Coordinate.x - 1; x <= tile.Coordinate.x + 1; x++)
         {
             for (int z = tile.Coordinate.z - 1; z <= tile.Coordinate.z + 1; z++)
             {
-                if (x < 0 || z < 0 || x > mapHeight  - 1 || z > mapWidth - 1)
+                if (x < 0 || z < 0 || x > mapHeight - 1 || z > mapWidth - 1)
                 {
-                    break;
+                    continue;
                 }
                 if (tile == tilesMap[x, z] && currentTile == tilesMap[x, z])
                 {
-                    break;
+                    continue;
                 }
-                TilesReccursionCheck(tilesMap[x, z], countRecursion + 1);
+                lastTile = tile;
+                TilesReccursionCheck(tilesMap[x, z], costMove);
             }
         }
+        Debug.Log($"Из региона {currentTile.GetRegionID} в {lastTile.GetRegionID}");
     }
 }
