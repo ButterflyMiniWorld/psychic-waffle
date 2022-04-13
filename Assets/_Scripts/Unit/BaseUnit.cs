@@ -8,11 +8,15 @@ public class BaseUnit : MonoBehaviour
     [SerializeField] private int initiative;
     [SerializeField] private BaseTile currentTile;
 
+
     private int actionPointsLeft;
+
     private BaseTile[,] tilesMap;
-    private BaseTile lastTile;
-    private int costMod;
+    private BaseTile lastTile = null;
+
     private List<PossibleTile> availableTilesToMove = new List<PossibleTile>();
+    private int costToMove;
+    private PossibleTile possibleTile;
 
     private int mapHeight;
     private int mapWidth;
@@ -48,6 +52,8 @@ public class BaseUnit : MonoBehaviour
         availableTilesToMove.Clear();
         tilesMap = map;
 
+        lastTile = null;
+
         mapWidth = width;
         mapHeight = height;
 
@@ -58,8 +64,7 @@ public class BaseUnit : MonoBehaviour
 
     private void TilesReccursionCheck(BaseTile tile, int costMove)
     {
-        tile.TileAvailableToMove();
-        PossibleTile possibleTile = new PossibleTile(tile, costMove);
+        //possibleTile = new PossibleTile(tile, costMove);
 
         if (tile == null)
         {
@@ -80,17 +85,20 @@ public class BaseUnit : MonoBehaviour
             {
                 costMove += 1;
             }
-        }
-        if (!availableTilesToMove.Contains(possibleTile))
-        {
-            availableTilesToMove.Add(possibleTile);
-        }
 
-        if (costMove >= ActionPointsLeft)
-        {
-            return;
-        }
+            if (costMove > ActionPointsLeft)
+            {
+                return;
+            }
 
+            tile.TileAvailableToMove();
+            possibleTile = new PossibleTile(tile, costMove);
+
+            if (!availableTilesToMove.Contains(possibleTile))
+            {
+                availableTilesToMove.Add(possibleTile);
+            }
+        }
 
         for (int x = tile.Coordinate.x - 1; x <= tile.Coordinate.x + 1; x++)
         {
@@ -108,6 +116,5 @@ public class BaseUnit : MonoBehaviour
                 TilesReccursionCheck(tilesMap[x, z], costMove);
             }
         }
-        Debug.Log($"Из региона {currentTile.GetRegionID} в {lastTile.GetRegionID}");
     }
 }
