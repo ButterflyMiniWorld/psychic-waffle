@@ -36,15 +36,16 @@ public class BaseUnit : MonoBehaviour
         TurnController.OnTurnEnd -= EndTurn;
     }
 
+    public void EndTurn()
+    {
+        actionPointsLeft = actionPoints;
+    }
+   
+    #region Move
     public void Move(BaseTile newTile, int actionPointCost = 0)
     {
         currentTile = newTile;
         actionPointsLeft -= actionPointCost;
-    }
-
-    public void EndTurn()
-    {
-        actionPointsLeft = actionPoints;
     }
 
     public virtual List<PossibleTile> TilesToMove(BaseTile[,] map, int width, int height)
@@ -64,8 +65,6 @@ public class BaseUnit : MonoBehaviour
 
     private void TilesReccursionCheck(BaseTile tile, int costMove)
     {
-        //possibleTile = new PossibleTile(tile, costMove);
-
         if (tile == null)
         {
             return;
@@ -77,6 +76,11 @@ public class BaseUnit : MonoBehaviour
         }
         else
         {
+            if(tile.GetUnit)
+            {
+                return;
+            }
+
             if (tile.GetRegionID != lastTile.GetRegionID)
             {
                 costMove += 2;
@@ -117,4 +121,6 @@ public class BaseUnit : MonoBehaviour
             }
         }
     }
+    #endregion
+
 }

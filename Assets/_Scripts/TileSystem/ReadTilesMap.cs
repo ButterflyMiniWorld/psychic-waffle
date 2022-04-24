@@ -10,7 +10,8 @@ public class ReadTilesMap : MonoBehaviour
     private int left, right, down, up = 0;
     private int regionCounts = 0;
 
-    private List<Transform> tiles = new List<Transform>();
+    private List<Transform> tilesTransform = new List<Transform>();
+    private List<BaseTile> tiles = new List<BaseTile>();
 
     public static Action<BaseTile[,], int, int> OnMapRead;
 
@@ -24,13 +25,16 @@ public class ReadTilesMap : MonoBehaviour
     {
         foreach(Transform childTile in transform)
         {
-            tiles.Add(childTile);
+            tilesTransform.Add(childTile);
         }
 
-        foreach(Transform tile in tiles)
+        foreach(Transform tile in tilesTransform)
         {
+            tiles.Add(tile.GetComponent<BaseTile>());
             CheckPosition(tile.position);
         }
+
+        TurnInfoHolder.Instance.allTiles = tiles;
 
         int width = (-left + right);
         int height = (-down + up);
@@ -38,9 +42,9 @@ public class ReadTilesMap : MonoBehaviour
 
         Debug.Log($"left: {left}; right: {right}; down: {down}; up: {up}; ");
 
-        Debug.Log(tiles.Count);
+        Debug.Log(tilesTransform.Count);
 
-        foreach (Transform tile in tiles)
+        foreach (Transform tile in tilesTransform)
         {
             int x = (int)((tile.position.x - left - 0.5));
             int z = (int)((tile.position.z - up + 0.5) * (-1));
@@ -57,7 +61,9 @@ public class ReadTilesMap : MonoBehaviour
             tileMap[x, z].SearchConnectedTiles();
         }
 
-        GetComponent<TurnController>().InitMap(tileMap, width, height);
+        TurnInfoHolder.Instance.InitMap(tileMap);
+
+        GetComponent<TurnController>().InitMap(width, height);
     }
 
     private void CheckPosition(Vector3 tilePosition)

@@ -21,32 +21,21 @@ public class TurnController : MonoBehaviour
         turnAction = GetComponent<TurnAction>();
         reader = GetComponent<ReadTilesMap>();
         turnAction.OnTurnEnd += NextTurn;
-        ReadTilesMap.OnMapRead += InitMap;
     }
 
     private void OnDisable()
     {
         turnAction.OnTurnEnd -= NextTurn;
-        ReadTilesMap.OnMapRead -= InitMap;
     }
 
-    public void InitMap (BaseTile[,] map, int height, int width)
+    public void InitMap (int height, int width)
     {
         Debug.Log("Map is initialized");
+        tilesMap = TurnInfoHolder.Instance.tilesMap;
 
-        tilesMap = map;
+        TurnInfoHolder.Instance.SearchUnits();
 
-        foreach (BaseTile tile in tilesMap)
-        {
-            if (tile == null)
-            {
-                continue;
-            }
-            if (tile.TryGetUnit(out BaseUnit unit))
-            {
-                allUnits.Add(unit);
-            }
-        }
+        allUnits = TurnInfoHolder.Instance.allUnits;
 
         turnAction.Init(tilesMap, height, width);
         StartFight();
@@ -97,6 +86,7 @@ public class TurnController : MonoBehaviour
 
     public void TurnEnd()
     {
+        print(sortedUnits[currentUnitId]);
         OnTurnEnd?.Invoke();
         currentUnitId++;
         NextTurn();

@@ -2,25 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct PossibleTile
-{
-    public PossibleTile(BaseTile tile, int cost)
-    {
-        this.tile = tile;
-        actionCost = cost;
-    }
-
-    public BaseTile tile;
-    public int actionCost;
-}
-
 public class TurnAction : Singleton<TurnAction>
 {
     private BaseUnit currentUnit;
     private BaseTile currentTile;
 
     private BaseTile[,] tilesMap;
-    private List<PossibleTile> possibleTiles = new List<PossibleTile>();
+    [SerializeField] private List<PossibleTile> possibleTiles = new List<PossibleTile>();
 
     private BaseTile tileToMove;
     private int actionCost;
@@ -29,7 +17,6 @@ public class TurnAction : Singleton<TurnAction>
     private int width;
 
     public Action OnTurnEnd;
-
 
     public void Init(BaseTile[,] map, int height, int width)
     {
@@ -76,16 +63,29 @@ public class TurnAction : Singleton<TurnAction>
         }
 
     }
+
     public bool ContainsInPossible(BaseTile tileToMove)
     {
+        actionCost = 0;
+
         for (int i = 0; i < possibleTiles.Count; i++)
         {
             if (possibleTiles[i].tile == tileToMove)
             {
-                actionCost = possibleTiles[i].actionCost;
-                return true;
+                if (actionCost > possibleTiles[i].actionCost || actionCost == 0)
+                {
+                    actionCost = possibleTiles[i].actionCost;
+                }
             }
         }
-        return false;
+
+        if (actionCost > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
